@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import HomeScreen from './screens/HomeScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
 
@@ -22,8 +23,10 @@ export default function App() {
 
           if (route.name === 'Accueil') {
             iconName = 'globe';
+            size = 30;
           } else if (route.name === 'Favoris') {
             iconName = 'star';
+            size = 30;
           }
 
           return <FontAwesome name={iconName} size={size} color={color} />;
@@ -31,7 +34,12 @@ export default function App() {
         tabBarActiveTintColor: '#2191f3',
         tabBarInactiveTintColor: 'gray',
         headerShown: false,
-      })}>
+      })}
+      
+        tabBarOptions={{
+          showLabel: false,
+        }}
+      >
         <Tab.Screen name="Accueil" component={HomeScreen} />
         <Tab.Screen name="Favoris" component={FavoritesScreen} />
       </Tab.Navigator>

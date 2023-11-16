@@ -14,19 +14,6 @@ export default function HomeScreen({ navigation }) {
 
   const BACKEND_ADDRESS = 'http://192.168.1.83:3000';
 
-  // useEffect(() => {
-  //   fetch(`${BACKEND_ADDRESS}/country`)
-  //     .then(response => response.json())  
-  //     .then(data => {
-  //       const formatedData = data.countries.map(country => {
-            
-  //         return { name: country.translations.fra.common, flags: country.flags.png };
-  //       });
-  //       setCountriesData(formatedData);
-  //     });
-          
-  // }, []);
-
   useEffect(() => {
     if (selectRegion) {
       fetch(`${BACKEND_ADDRESS}/region/${selectRegion}`)
@@ -59,11 +46,25 @@ export default function HomeScreen({ navigation }) {
   <SafeAreaView style={styles.container}>
    
    <View>
-     <Header />
+     <Header/>
    </View>
+
+   {selectRegion && (
+   <View>
+      <Text style={styles.regionSelected}>{selectRegion}</Text>
+   </View>
+   )}
+
+  {!selectRegion && (
+    <View>
+        <Text style={styles.regionSelected}>Choisis ta région</Text>
+    </View>
+    )}
+   
    
    <ScrollView>
-    <View>
+    
+    <View style={styles.regionContainer}>
       {!selectRegion &&
       regions.map((regions, i) => (
         <TouchableOpacity key={i} onPress={() => handleRegionClick(regions.name)}>
@@ -78,8 +79,7 @@ export default function HomeScreen({ navigation }) {
     </View>
 
     {selectRegion && (
-    <View>
-      <Text style={styles.regionSelected}>{selectRegion}</Text>
+    <View style={styles.countryContainer}>
       {countriesData.map((data, i) => (
           <View key={i}>
             <Country
@@ -100,8 +100,7 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f2f2f2',
-    alignItems: 'center',
+    backgroundColor: '#ffffff',
   },
 
   regionSelected: {
@@ -110,5 +109,23 @@ const styles = StyleSheet.create({
     color: '#3c3c3c',
     fontWeight: '700',
     letterSpacing: 0.15,
+    marginLeft: 10,
+    alignSelf: 'center',
+    marginVertical: 10,
   },
+
+  regionContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center'
+  },
+
+  countryContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center'
+  }
+
 })
