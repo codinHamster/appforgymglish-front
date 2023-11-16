@@ -8,12 +8,22 @@ export default function RegionCard(props) {
         Asia: require('../assets/Asia.png'),
         Europe: require('../assets/Europe.png'),
         Oceania: require('../assets/Oceania.png'),
-      };
+    };
+
+    const regionFr = {
+        Africa : 'Afrique',
+        Americas : 'Amériques',
+        Asia : 'Asie',
+        Oceania : 'Océanie'
+    }
+
+    const frenchRegionName = regionFr[props.regionName] || props.regionName;
+    
      
     return (
         <View style={styles.container}>
-                <ImageBackground style={styles.regionImage} source={regionImages[`${props.regionName}`]} imageStyle={{ opacity: 0.08}}>
-                    <Text style={styles.regionText}>{props.regionName}</Text>
+                <ImageBackground style={styles.regionImage} source={regionImages[`${props.regionName}`]} blurRadius={5} imageStyle={{ opacity: 0.15}}>
+                    <Text style={styles.regionText}>{frenchRegionName}</Text>
                 </ImageBackground>
         </View>
     );
@@ -27,7 +37,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ffb3b3',
+        backgroundColor: '#fdfdfd',
         margin: 10,
         width: 190,
         height: 180,
@@ -49,7 +59,7 @@ const styles = StyleSheet.create({
     },
 
     regionText:{
-        fontSize: 40,
+        fontSize: 30,
         fontWeight: 'bold',
         color: '#3c3c3c',
         fontWeight: '700',

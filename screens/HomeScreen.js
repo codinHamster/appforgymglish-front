@@ -38,6 +38,15 @@ export default function HomeScreen({ navigation }) {
     { name: 'Oceania' },
   ];
 
+  const regionFr = {
+    Africa : 'Afrique',
+    Americas : 'Amériques',
+    Asia : 'Asie',
+    Oceania : 'Océanie'
+  }
+
+  const frenchRegionName = regionFr[selectRegion] || selectRegion
+
   const handleRegionClick = (regionName) => {
     setSelectRegion(regionName);
   };
@@ -45,19 +54,19 @@ export default function HomeScreen({ navigation }) {
  return (
   <SafeAreaView style={styles.container}>
    
-   <View>
+   <View style={{flexDirection: 'row', justifyContent: 'center', marginHorizontal: 7 }}>
      <Header/>
    </View>
 
    {selectRegion && (
    <View>
-      <Text style={styles.regionSelected}>{selectRegion}</Text>
+      <Text style={styles.regionSelected}>Et quelle pays en {frenchRegionName} ?</Text>
    </View>
    )}
 
   {!selectRegion && (
     <View>
-        <Text style={styles.regionSelected}>Choisis ta région</Text>
+        <Text style={styles.regionSelected}>Dans quelle partie du monde veux-tu bouger ?</Text>
     </View>
     )}
    
@@ -100,11 +109,11 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#dbeeff',
   },
 
   regionSelected: {
-    fontSize: 40,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#3c3c3c',
     fontWeight: '700',

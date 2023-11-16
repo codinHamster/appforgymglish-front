@@ -31,7 +31,7 @@ export default function App() {
 
           return <FontAwesome name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#2191f3',
+        tabBarActiveTintColor: '#8bc9ff',
         tabBarInactiveTintColor: 'gray',
         headerShown: false,
       })}
