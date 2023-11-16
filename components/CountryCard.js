@@ -3,21 +3,11 @@ import { Button, StyleSheet, Text, View, SafeAreaView, Image, ScrollView, ImageB
 import { LinearGradient } from 'expo-linear-gradient';
 
 
-export default function Country(props) {
+export default function CountryCard(props) {
 
      
     return (
-        // <View>
-        //     <View>
-        //         <Image source={{ uri : `${props.flags}`}} style={styles.flag}/>
-        //     </View>
-                    
-        //     <View>
-        //         <Text style={styles.name}>{props.name}</Text>
-        //     </View>
-            
-        // </View>
-
+        
         <View>
             <View style={styles.cardFlag}>
                 <Image style={styles.flag} source={{ uri : `${props.flags}`}}/>

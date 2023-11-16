@@ -3,8 +3,11 @@ import { Button, StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpac
 import { useEffect, useState } from 'react';
 
 import Header from '../components/Header';
-import Country from '../components/Country';
+import CountryCard from '../components/CountryCard';
 import RegionCard from '../components/RegionCard';
+
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 
 export default function HomeScreen({ navigation }) {
 
@@ -91,7 +94,7 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.countryContainer}>
       {countriesData.map((data, i) => (
           <View key={i}>
-            <Country
+            <CountryCard
               name={data.name}
               flags={data.flags}
             />

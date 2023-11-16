@@ -38,9 +38,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fdfdfd',
-        margin: 10,
-        width: 190,
-        height: 180,
+        margin: 15,
+        width: 175,
+        height: 175,
         borderRadius: 15,
         shadowColor: '#000',
         shadowOffset: {
