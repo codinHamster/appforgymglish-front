@@ -38,17 +38,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fdfdfd',
-        margin: 15,
-        width: 175,
-        height: 175,
+        margin: 10,
+        width: 150,
+        height: 150,
         borderRadius: 15,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 5,
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
+        elevation: 7,
     },
 
     regionImage: {
@@ -59,8 +57,7 @@ const styles = StyleSheet.create({
     },
 
     regionText:{
-        fontSize: 30,
-        fontWeight: 'bold',
+        fontSize: 26,
         color: '#3c3c3c',
         fontWeight: '700',
         letterSpacing: 0.15,

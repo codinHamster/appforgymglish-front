@@ -20,18 +20,19 @@ export default function CountryCard(props) {
 const styles = StyleSheet.create({
 
     cardFlag: {
-        height: 175,
-        width: 175,
+        height: 150,
+        width: 150,
         borderRadius: 15,
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'center',
         shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 0 },
+        shadowOffset: { width: 0, height: 5 },
         shadowOpacity: 0.2,
-        shadowRadius: 10,
+        shadowRadius: 6,
+        elevation: 7,
         backgroundColor: '#fdfdfd',
-        margin: 15,
+        margin: 10,
     },
 
     flag:{
@@ -39,10 +40,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 30,
         overflow: 'hidden',
-        shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 3,
-        shadowRadius: 4,
         height: 50,
         width: 80,
         resizeMode: 'stretch',

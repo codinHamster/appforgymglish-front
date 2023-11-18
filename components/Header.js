@@ -1,4 +1,5 @@
-import { Button, StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from 'react-native';
+import { Platform, StatusBar, Button, StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from 'react-native';
+import Constants from 'expo-constants';
 
 export default function Header(props) {
      
@@ -16,6 +17,7 @@ export default function Header(props) {
 const styles = StyleSheet.create({
 
     container: {
+        marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
