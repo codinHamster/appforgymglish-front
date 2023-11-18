@@ -8,7 +8,6 @@ import RegionCard from '../components/RegionCard';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-
 export default function HomeScreen({ navigation }) {
 
   const [countriesData, setCountriesData] = useState([]);
@@ -24,7 +23,7 @@ export default function HomeScreen({ navigation }) {
         .then(data => {
           const formatedData = data.countries.map(country => {
               
-            return { name: country.translations.fra.common, flags: country.flags.png };
+            return { name: country.name.common, nameFRA : country.translations.fra.common, flags: country.flags.png };
           });
           setCountriesData(formatedData);
         }); 
@@ -50,9 +49,13 @@ export default function HomeScreen({ navigation }) {
 
   const frenchRegionName = regionFr[selectRegion] || selectRegion
 
-  const handleRegionClick = (regionName) => {
+  const handleRegionClick = regionName => {
     setSelectRegion(regionName);
   };
+
+  const handleCountryClick = selectCountry => {
+    navigation.navigate('countryInfo', { selectCountry })
+  }
 
  return (
   <SafeAreaView style={styles.container}>
@@ -63,13 +66,13 @@ export default function HomeScreen({ navigation }) {
 
    {selectRegion && (
    <View>
-      <Text style={styles.regionSelected}>Et quelle pays en {frenchRegionName} ?</Text>
+      <Text style={styles.regionSelected}>Et quel pays en {frenchRegionName} ?</Text>
    </View>
    )}
 
   {!selectRegion && (
     <View>
-        <Text style={styles.regionSelected}>Dans quelle partie du monde veux-tu bouger ?</Text>
+        <Text style={styles.regionSelected}>Quelle partie du monde veux-tu visiter ?</Text>
     </View>
     )}
    
@@ -93,12 +96,14 @@ export default function HomeScreen({ navigation }) {
     {selectRegion && (
     <View style={styles.countryContainer}>
       {countriesData.map((data, i) => (
+        <TouchableOpacity key={i} onPress={() => handleCountryClick(data.name)}>
           <View key={i}>
             <CountryCard
-              name={data.name}
+              name={data.nameFRA}
               flags={data.flags}
             />
           </View>
+        </TouchableOpacity>
       ))}
     </View>
     )}

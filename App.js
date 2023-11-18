@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from './screens/HomeScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
+import CountryInfoScreen from './screens/CountryInfoScreen';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
@@ -23,25 +24,25 @@ export default function App() {
 
           if (route.name === 'Accueil') {
             iconName = 'globe';
-            size = 30;
+            iconSize = 30;
           } else if (route.name === 'Favoris') {
             iconName = 'star';
-            size = 30;
+            iconSize = 30;
           }
 
-          return <FontAwesome name={iconName} size={size} color={color} />;
+          return <FontAwesome name={iconName} size={iconSize} color={color} />;
         },
         tabBarActiveTintColor: '#8bc9ff',
-        tabBarInactiveTintColor: 'gray',
+        tabBarInactiveTintColor: '#335561',
+        tabBarShowLabel: false,
         headerShown: false,
       })}
       
-        tabBarOptions={{
-          showLabel: false,
-        }}
+
       >
         <Tab.Screen name="Accueil" component={HomeScreen} />
         <Tab.Screen name="Favoris" component={FavoritesScreen} />
+        <Tab.Screen name="countryInfo" component={CountryInfoScreen} options={{ tabBarButton: () => null }}/>
       </Tab.Navigator>
     </NavigationContainer>
   );
