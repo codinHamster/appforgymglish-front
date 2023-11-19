@@ -15,6 +15,7 @@ export default function HomeScreen({ navigation }) {
   const [selectRegion, setSelectRegion] = useState(null);
   const [searchCountry, setSearchCountry] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [showRegionCard, setShowRegionCard] = useState(true);
 
   const BACKEND_ADDRESS = 'http://192.168.1.83:3000';
 
@@ -39,37 +40,20 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     const homeInitial = navigation.addListener('focus', () => {
       setSelectRegion(null);
+      setSearchCountry('');
     });
     return homeInitial;
   }, [navigation]);
 
-  // const handleSearch = () => {
-  //   fetch(`https://restcountries.com/v3.1/translation/${searchCountry}?fulltext=true`)
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       const formattedData = data.map(country => {
-  //         return {
-  //           name: country.name.common,
-  //           // nameFRA: country.translations.fra.common,
-  //           // flags: country.flags.png,
-  //           cca3: country.cca3
-  //         };
-  //       });
-  //       setCountriesData(formattedData);
-  //       if (formattedData.length > 0) {
-  //         navigation.navigate('countryInfo', { selectCountry: formattedData[0].cca3 });
-  //     };
-  //   });
-  // };
-
   const handleSearch = () => {
     if (searchCountry.length > 1) {
+      setShowRegionCard(false);
       fetch(`https://restcountries.com/v3.1/translation/${searchCountry}?fulltext=true`)
         .then(response => response.json())
         .then(data => {
           const formattedData = data.map(country => {
             return {
-              name: country.name.common,
+              // name: country.name.common,
               nameFRA: country.translations.fra.common,
               // flags: country.flags.png,
               cca3: country.cca3
@@ -78,6 +62,7 @@ export default function HomeScreen({ navigation }) {
           setSearchResults(formattedData);
       });
     } else {
+      setShowRegionCard(true)
       setSearchResults([]);
     }
   };
@@ -112,73 +97,80 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate('countryInfo', { selectCountry })
   }
 
- return (
-  <SafeAreaView style={styles.container}>
-   
-   <View style={{flexDirection: 'column', justifyContent: 'center', marginHorizontal: 7 }}>
-     <Header title={frenchRegionName}/>
-   </View>
-
-   {selectRegion && (
-    <View>
-      <Text style={styles.regionSelected}>Quel pays en {frenchRegionName} veux-tu voir ?</Text>
-    </View>
-   )}
-
-  {!selectRegion && (
-    <View>
-      <Text style={styles.regionSelected}>Recherche le pays ou choisis la région :</Text>
-      
-      <TextInput
-        style={styles.textInput}
-        onChangeText={text => setSearchCountry(text)}
-        value={searchCountry}
-        onSubmitEditing={handleSearch}
-        placeholder='Rechercher directement le pays'
-      />
-
-    {searchResults.map((result, index) => (
-      <TouchableOpacity key={index} onPress={() => navigation.navigate('countryInfo', { selectCountry: result.cca3 })}>
-        <Text style={styles.textResult}>{result.nameFRA}</Text>
-      </TouchableOpacity>
-    ))}
-    </View>
-    )}
-   
-
-   <ScrollView>
+  return (
+    <SafeAreaView style={styles.container}>
     
-    <View style={styles.regionContainer}>
-      {!selectRegion &&
-      regions.map((regions, i) => (
-        <TouchableOpacity key={i} onPress={() => handleRegionClick(regions.name)} activeOpacity={0.8}>
-          <RegionCard
-            regionName={regions.name}
-          />
-        </TouchableOpacity>
-      )
+      <View style={{flexDirection: 'column', justifyContent: 'center', marginHorizontal: 7 }}>
+        <Header title={frenchRegionName}/>
+      </View>
+
+      {selectRegion && (
+        <View>
+          <Text style={styles.regionSelected}>Quel pays en {frenchRegionName} veux-tu voir ?</Text>
+        </View>
       )}
-    </View>
 
-    {selectRegion && (
-    <View style={styles.countryContainer}>
-      {countriesData.map((data, i) => (
-        <TouchableOpacity key={i} onPress={() => handleCountryClick(data.cca3)}>
-          <View key={i}>
-            <CountryCard
-              name={data.nameFRA}
-              flags={data.flags}
-            />
-          </View>
-        </TouchableOpacity>
-      ))}
-    </View>
-    )}
+      {!selectRegion && (
+        <View>
+          <Text style={styles.regionSelected}>Recherche le pays ou choisis la région :</Text>
+          
+          <TextInput
+            style={styles.textInput}
+            onChangeText={text => setSearchCountry(text)}
+            value={searchCountry}
+            onSubmitEditing={handleSearch}
+            placeholder='Rechercher directement le pays'
+          />
+        </View>
+        )}
+      
+      <ScrollView>
+      {searchResults.map((result, index) => (
+        
+          <TouchableOpacity key={index} onPress={() => navigation.navigate('countryInfo', { selectCountry: result.cca3 })}>
+            <Text style={styles.textResult}>{result.nameFRA}</Text>
+          </TouchableOpacity>
+          
+        ))}
+        </ScrollView>
 
-   </ScrollView>
-   
-  </SafeAreaView>
- );
+
+
+        <ScrollView>
+
+        {showRegionCard && (
+        <View style={styles.regionContainer}>
+          {!selectRegion &&
+          regions.map((regions, i) => (
+            <TouchableOpacity key={i} onPress={() => handleRegionClick(regions.name)} activeOpacity={0.8}>
+              <RegionCard
+                regionName={regions.name}
+              />
+            </TouchableOpacity>
+          )
+          )}
+        </View>
+        )}
+
+        {selectRegion && (
+        <View style={styles.countryContainer}>
+          {countriesData.map((data, i) => (
+            <TouchableOpacity key={i} onPress={() => handleCountryClick(data.cca3)}>
+              <View key={i}>
+                <CountryCard
+                  name={data.nameFRA}
+                  flags={data.flags}
+                />
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+        )}
+
+      </ScrollView>
+    
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
