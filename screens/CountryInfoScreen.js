@@ -1,21 +1,26 @@
-import { Button, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Header from '../components/Header';
+
+import { addCountry, removeCountry } from '../reducers/favorites'
 
 
 export default function CountryInfoScreen({ route }) {
 
+  const dispatch = useDispatch();
+
   const [countriesData, setCountriesData] = useState([]);
 
-  const { selectCountry } = route.params;
+  const { selectCountry, searchCountry } = route.params;
 
   const BACKEND_ADDRESS = 'http://192.168.1.83:3000';
 
   useEffect(() => {
     if (selectCountry) {
-      fetch(`${BACKEND_ADDRESS}/name/${selectCountry}`)
+      fetch(`${BACKEND_ADDRESS}/alpha/${selectCountry}`)
         .then(response => response.json())  
         .then(data => {
           const country = data.countryInfo[0]
@@ -29,13 +34,34 @@ export default function CountryInfoScreen({ route }) {
             area: country.area.toLocaleString('fr-FR'),
             currencyCode: currencyCode,
             currency: currency,
-            carside: country.car.side };
+            carside: country.car.side,
+            cca3: country.cca3 };
           setCountriesData(formatedData);
         }); 
-    }
-
-          
+    }     
   }, [selectCountry]);
+
+  // useEffect(() => {
+  //   if (searchCountry) {
+  //     fetch(`${BACKEND_ADDRESS}/name/${searchCountry}`)
+  //       .then(response => response.json())  
+  //       .then(data => {
+  //         const country = data.countryInfo[0]
+  //         const currencyCode = Object.keys(country.currencies)[0];
+  //         const currency = country.currencies[currencyCode].name;
+  //         const formatedData = {
+  //           name: country.translations.fra.common,
+  //           capital: country.capital,
+  //           flags: country.flags.png,
+  //           population: country.population.toLocaleString('fr-FR'),
+  //           area: country.area.toLocaleString('fr-FR'),
+  //           currencyCode: currencyCode,
+  //           currency: currency,
+  //           carside: country.car.side };
+  //         setCountriesData(formatedData);
+  //       }); 
+  //   }     
+  // }, [searchCountry]);
 
   const carsideFr = {
     'right': 'À droite',
@@ -44,12 +70,17 @@ export default function CountryInfoScreen({ route }) {
   
   const frenchCarside = carsideFr[countriesData.carside] || countriesData.carside;
 
+  const handleSubmit = (newCountry) => {
+    dispatch(addCountry(newCountry));
+  };
+ 
+
  return (
   <SafeAreaView style={styles.container}>
   {/* <KeyboardAvoidingView style={{flex:1, marginHorizontal:20,}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}> */}
     
     <View style={{flexDirection: 'row', justifyContent: 'center', marginHorizontal: 7 }}>
-      <Header/>
+      <Header title={countriesData.name}/>
     </View>
 
     <View style={styles.cardCountry}>
@@ -58,7 +89,7 @@ export default function CountryInfoScreen({ route }) {
       </View>
       
       
-      <Text style={styles.countryText}>{countriesData.name}</Text>
+      {/* <Text style={styles.countryText}>{countriesData.name}</Text> */}
       
       <View>
         <Text style={styles.titleText}>Capitale</Text>
@@ -87,8 +118,8 @@ export default function CountryInfoScreen({ route }) {
       </View>
     </View>
 
-    <TouchableOpacity style={styles.buttons} activeOpacity={0.5}>
-      <Text style={styles.btnText}>Ajouter dans ma liste</Text>
+    <TouchableOpacity style={styles.buttons} activeOpacity={0.5} onPress={() => handleSubmit(countriesData)}>
+      <Text style={styles.btnText}>Ajouter à ma liste</Text>
     </TouchableOpacity>
   
   {/* </KeyboardAvoidingView> */}
@@ -109,7 +140,8 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     marginTop: 5,
     borderWidth: 1,
-    borderRadius: 5
+    borderRadius: 5,
+    borderColor: '#000000'
   },
 
   cardCountry: {
@@ -117,7 +149,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
-    borderWidth: 1,
     backgroundColor: '#fdfdfd',
     marginTop: 15,
     height: 500,
@@ -125,12 +156,12 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
 
-  countryText: {
-    fontSize: 26,
-    fontWeight: '700',
-    color: '#3c3c3c',
-    textAlign: 'center'
-  },
+  // countryText: {
+  //   fontSize: 26,
+  //   fontWeight: '700',
+  //   color: '#3c3c3c',
+  //   textAlign: 'center'
+  // },
 
   titleText: {
     fontSize: 20,

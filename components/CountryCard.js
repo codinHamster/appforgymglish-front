@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View, SafeAreaView, Image, ScrollView, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, ImageBackground } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -9,7 +9,7 @@ export default function CountryCard(props) {
     return (
         
         <View>
-            <View style={styles.cardFlag}>
+            <View style={styles.cardCountry}>
                 <Image style={styles.flag} source={{ uri : `${props.flags}`}}/>
                 <Text style={styles.name}>{props.name}</Text>
             </View>     
@@ -19,12 +19,12 @@ export default function CountryCard(props) {
 
 const styles = StyleSheet.create({
 
-    cardFlag: {
+    cardCountry: {
         height: 150,
         width: 150,
         borderRadius: 15,
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000000',
         shadowOffset: { width: 0, height: 5 },
@@ -33,20 +33,22 @@ const styles = StyleSheet.create({
         elevation: 7,
         backgroundColor: '#fdfdfd',
         margin: 10,
+        paddingHorizontal: 10
     },
 
     flag:{
-        borderColor: '#000',
+        borderColor: '#000000',
         borderWidth: 1,
         borderRadius: 30,
         overflow: 'hidden',
-        height: 50,
-        width: 80,
+        height: 40,
+        width: 70,
         resizeMode: 'stretch',
+        marginBottom: 15
       },
 
     name: {
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: '700',
         color: '#3c3c3c',
         textAlign: 'center'

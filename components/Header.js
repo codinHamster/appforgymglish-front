@@ -1,18 +1,17 @@
-import { Platform, StatusBar, Button, StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from 'react-native';
-import Constants from 'expo-constants';
+import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
 
-export default function Header(props) {
+
+export default function Header({ title }) {
      
     return (
         <View style={styles.container}>       
             <View>
-                <Text style={styles.title}>The World-Trotter</Text>
+                <Text style={styles.title}>{title || 'The World-Trotter'}</Text>
             </View>
         </View>
     );
-    
-
 }
+
 
 const styles = StyleSheet.create({
 
@@ -27,10 +26,11 @@ const styles = StyleSheet.create({
     },
 
     title:{
-        fontFamily: 'System',
         fontSize: 30,
         color: '#3c3c3c',
-        fontWeight: '900',
+        fontWeight: '800',
+        textAlign: 'center',
+        paddingHorizontal: 20,
     },
 
   })

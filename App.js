@@ -10,49 +10,49 @@ import CountryInfoScreen from './screens/CountryInfoScreen';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+
+import favorites from './reducers/favorites';
 
 const Tab = createBottomTabNavigator();
 
+const store = configureStore({
+  reducer: { favorites },
+});
 
 export default function App() {
   return (
     
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
-          let iconName = '';
+    <Provider store={store}>
+      <NavigationContainer>
+        <Tab.Navigator screenOptions={({ route }) => ({
+          tabBarIcon: ({ color, size }) => {
+            let iconName = '';
 
-          if (route.name === 'Accueil') {
-            iconName = 'globe';
-            iconSize = 30;
-          } else if (route.name === 'Favoris') {
-            iconName = 'star';
-            iconSize = 30;
-          }
+            if (route.name === 'Accueil') {
+              iconName = 'globe';
+              iconSize = 30;
+            } else if (route.name === 'Favoris') {
+              iconName = 'star';
+              iconSize = 30;
+            }
 
-          return <FontAwesome name={iconName} size={iconSize} color={color} />;
-        },
-        tabBarActiveTintColor: '#8bc9ff',
-        tabBarInactiveTintColor: '#335561',
-        tabBarShowLabel: false,
-        headerShown: false,
-      })}
-      
+            return <FontAwesome name={iconName} size={iconSize} color={color} />;
+          },
+          tabBarActiveTintColor: '#8bc9ff',
+          tabBarInactiveTintColor: '#335561',
+          tabBarShowLabel: false,
+          headerShown: false,
+        })}
+        
 
-      >
-        <Tab.Screen name="Accueil" component={HomeScreen} />
-        <Tab.Screen name="Favoris" component={FavoritesScreen} />
-        <Tab.Screen name="countryInfo" component={CountryInfoScreen} options={{ tabBarButton: () => null }}/>
-      </Tab.Navigator>
-    </NavigationContainer>
+        >
+          <Tab.Screen name="Accueil" component={HomeScreen} />
+          <Tab.Screen name="Favoris" component={FavoritesScreen} />
+          <Tab.Screen name="countryInfo" component={CountryInfoScreen} options={{ tabBarButton: () => null }}/>
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'red',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

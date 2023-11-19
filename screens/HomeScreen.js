@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 
 import { useEffect, useState } from 'react';
 
@@ -8,12 +8,13 @@ import RegionCard from '../components/RegionCard';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+
 export default function HomeScreen({ navigation }) {
 
   const [countriesData, setCountriesData] = useState([]);
   const [selectRegion, setSelectRegion] = useState(null);
   const [searchCountry, setSearchCountry] = useState('');
-
+  const [searchResults, setSearchResults] = useState([]);
 
   const BACKEND_ADDRESS = 'http://192.168.1.83:3000';
 
@@ -27,7 +28,8 @@ export default function HomeScreen({ navigation }) {
             return {
               name: country.name.common,
               nameFRA : country.translations.fra.common,
-              flags: country.flags.png };
+              flags: country.flags.png,
+              cca3: country.cca3 };  
           });
           setCountriesData(formatedData);
         }); 
@@ -41,23 +43,49 @@ export default function HomeScreen({ navigation }) {
     return homeInitial;
   }, [navigation]);
 
+  // const handleSearch = () => {
+  //   fetch(`https://restcountries.com/v3.1/translation/${searchCountry}?fulltext=true`)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       const formattedData = data.map(country => {
+  //         return {
+  //           name: country.name.common,
+  //           // nameFRA: country.translations.fra.common,
+  //           // flags: country.flags.png,
+  //           cca3: country.cca3
+  //         };
+  //       });
+  //       setCountriesData(formattedData);
+  //       if (formattedData.length > 0) {
+  //         navigation.navigate('countryInfo', { selectCountry: formattedData[0].cca3 });
+  //     };
+  //   });
+  // };
+
   const handleSearch = () => {
-    fetch(`https://restcountries.com/v3.1/translation/${searchCountry}`)
-      .then(response => response.json())
-      .then(data => {
-        const formattedData = data.map(country => {
-          return {
-            name: country.name.common,
-            nameFRA: country.translations.fra.common,
-            flags: country.flags.png
-          };
-        });
-        setCountriesData(formattedData);
-        if (formattedData.length > 0) {
-          navigation.navigate('countryInfo', { selectCountry: formattedData[0].name });
-      };
-  });
-};
+    if (searchCountry.length > 1) {
+      fetch(`https://restcountries.com/v3.1/translation/${searchCountry}?fulltext=true`)
+        .then(response => response.json())
+        .then(data => {
+          const formattedData = data.map(country => {
+            return {
+              name: country.name.common,
+              nameFRA: country.translations.fra.common,
+              // flags: country.flags.png,
+              cca3: country.cca3
+            };
+          });
+          setSearchResults(formattedData);
+      });
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchCountry]);
+  
 
   const regions = [
     { name: 'Africa' },
@@ -88,40 +116,45 @@ export default function HomeScreen({ navigation }) {
   <SafeAreaView style={styles.container}>
    
    <View style={{flexDirection: 'column', justifyContent: 'center', marginHorizontal: 7 }}>
-     <Header/>
+     <Header title={frenchRegionName}/>
    </View>
 
    {selectRegion && (
     <View>
-      <Text style={styles.regionSelected}>Et quel pays en {frenchRegionName} ?</Text>
+      <Text style={styles.regionSelected}>Quel pays en {frenchRegionName} veux-tu voir ?</Text>
     </View>
    )}
 
   {!selectRegion && (
     <View>
-      <Text style={styles.regionSelected}>Choisis la région ou recherche le pays</Text>
+      <Text style={styles.regionSelected}>Recherche le pays ou choisis la région :</Text>
+      
       <TextInput
         style={styles.textInput}
         onChangeText={text => setSearchCountry(text)}
         value={searchCountry}
         onSubmitEditing={handleSearch}
+        placeholder='Rechercher directement le pays'
       />
-      
+
+    {searchResults.map((result, index) => (
+      <TouchableOpacity key={index} onPress={() => navigation.navigate('countryInfo', { selectCountry: result.cca3 })}>
+        <Text style={styles.textResult}>{result.nameFRA}</Text>
+      </TouchableOpacity>
+    ))}
     </View>
     )}
    
-   
+
    <ScrollView>
     
     <View style={styles.regionContainer}>
       {!selectRegion &&
       regions.map((regions, i) => (
-        <TouchableOpacity key={i} onPress={() => handleRegionClick(regions.name)}>
-          <View key={i}>
-            <RegionCard
-              regionName={regions.name}
-            />
-          </View>
+        <TouchableOpacity key={i} onPress={() => handleRegionClick(regions.name)} activeOpacity={0.8}>
+          <RegionCard
+            regionName={regions.name}
+          />
         </TouchableOpacity>
       )
       )}
@@ -130,7 +163,7 @@ export default function HomeScreen({ navigation }) {
     {selectRegion && (
     <View style={styles.countryContainer}>
       {countriesData.map((data, i) => (
-        <TouchableOpacity key={i} onPress={() => handleCountryClick(data.name)}>
+        <TouchableOpacity key={i} onPress={() => handleCountryClick(data.cca3)}>
           <View key={i}>
             <CountryCard
               name={data.nameFRA}
@@ -165,6 +198,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 7,
+    marginTop: 5,
     marginBottom: 10
   },
 
@@ -191,6 +225,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center'
+  },
+
+  textResult: {
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginVertical: 10,
   }
 
 })
