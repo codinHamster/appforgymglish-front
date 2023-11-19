@@ -16,7 +16,7 @@ export default function CountryInfoScreen({ route }) {
 
   const { selectCountry, searchCountry } = route.params;
 
-  const BACKEND_ADDRESS = 'http://192.168.1.83:3000';
+  const BACKEND_ADDRESS = 'https://appforgymglish-back.vercel.app';
 
   useEffect(() => {
     if (selectCountry) {
