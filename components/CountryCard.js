@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
       },
 
     name: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '700',
         color: '#3c3c3c',
         textAlign: 'center'

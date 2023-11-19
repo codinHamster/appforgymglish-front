@@ -1,6 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -27,26 +24,23 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Tab.Navigator screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
+          tabBarIcon: ({ focused, color }) => {
             let iconName = '';
-
-            if (route.name === 'Accueil') {
+          
+            if (route.name === 'Accueil' || route.name === 'countryInfo') {
               iconName = 'globe';
-              iconSize = 30;
             } else if (route.name === 'Favoris') {
-              iconName = 'star';
-              iconSize = 30;
+              iconName = focused ? 'star' : 'star-o';
             }
 
-            return <FontAwesome name={iconName} size={iconSize} color={color} />;
+            return <FontAwesome name={iconName} size={28} color={color} />;
           },
           tabBarActiveTintColor: '#8bc9ff',
           tabBarInactiveTintColor: '#335561',
-          tabBarShowLabel: false,
+          tabBarShowLabel: true,
           headerShown: false,
         })}
         
-
         >
           <Tab.Screen name="Accueil" component={HomeScreen} />
           <Tab.Screen name="Favoris" component={FavoritesScreen} />
@@ -54,5 +48,6 @@ export default function App() {
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>
+
   );
 }

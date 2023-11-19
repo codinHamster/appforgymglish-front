@@ -71,7 +71,6 @@ export default function HomeScreen({ navigation }) {
     handleSearch();
   }, [searchCountry]);
   
-
   const regions = [
     { name: 'Africa' },
     { name: 'Americas' },
@@ -112,7 +111,7 @@ export default function HomeScreen({ navigation }) {
 
       {!selectRegion && (
         <View>
-          <Text style={styles.regionSelected}>Recherche le pays ou choisis la région :</Text>
+          <Text style={styles.regionSelected}>Recherche un pays ou choisis une région</Text>
           
           <TextInput
             style={styles.textInput}
@@ -122,21 +121,17 @@ export default function HomeScreen({ navigation }) {
             placeholder='Rechercher directement le pays'
           />
         </View>
-        )}
+      )}
       
       <ScrollView>
-      {searchResults.map((result, index) => (
-        
+        {searchResults.map((result, index) => (
           <TouchableOpacity key={index} onPress={() => navigation.navigate('countryInfo', { selectCountry: result.cca3 })}>
             <Text style={styles.textResult}>{result.nameFRA}</Text>
           </TouchableOpacity>
-          
         ))}
-        </ScrollView>
+      </ScrollView>
 
-
-
-        <ScrollView>
+      <ScrollView>
 
         {showRegionCard && (
         <View style={styles.regionContainer}>
@@ -202,7 +197,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.15,
     marginLeft: 10,
     alignSelf: 'center',
-    marginVertical: 10,
+    marginBottom: 15,
   },
 
   regionContainer: {

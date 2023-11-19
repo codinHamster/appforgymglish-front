@@ -8,8 +8,8 @@ import { removeCountry } from '../reducers/favorites';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function ProfileScreen({ navigation }) {
+  
   const dispatch = useDispatch();
-
   const favorites = useSelector((state) => state.favorites.value)
 
   const handleDelete = (countryToRemove) => {
@@ -39,7 +39,7 @@ export default function ProfileScreen({ navigation }) {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => handleCountryClick(country)}>
-              <Text>{country.name}</Text>   
+              <Text style={styles.textName}>{country.name}</Text>   
             </TouchableOpacity>
             
             <TouchableOpacity onPress={() => handleDelete(country)}>
@@ -83,13 +83,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#fdfdfd',
-    marginTop: 10,
+    marginBottom: 15,
     height: 80,
     width: '95%',
     paddingHorizontal: 20
   },
 
+  textName: {
+    fontSize: 20
+  },
+
   deleteIcon: {
     fontSize: 20
   }
+
 })

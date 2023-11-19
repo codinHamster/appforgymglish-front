@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 
 
 export default function RegionCard(props) {
@@ -22,7 +22,7 @@ export default function RegionCard(props) {
      
     return (
         <View style={styles.container}>
-            <ImageBackground style={styles.regionImage} source={regionImages[`${props.regionName}`]} blurRadius={5} imageStyle={{ opacity: 0.3}}>
+            <ImageBackground style={styles.regionImage} source={regionImages[`${props.regionName}`]} blurRadius={4} imageStyle={{ opacity: 0.3}}>
                 <Text style={styles.regionText}>{frenchRegionName}</Text>
             </ImageBackground>
         </View>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fdfdfd',
+        backgroundColor: '#bce1ff',
         margin: 10,
         width: 150,
         height: 150,
@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
         fontSize: 26,
         color: '#3c3c3c',
         fontWeight: '700',
-        letterSpacing: 0.15,
     },
 
   })

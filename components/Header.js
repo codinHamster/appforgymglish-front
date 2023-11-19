@@ -20,15 +20,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        height: 80,
-        backgroundColor: '#8bc9ff',
-        borderRadius: 15,       
+        height: 60,
+        // backgroundColor: '#8bc9ff',
+        borderBottomWidth: 3,
+        borderColor: '#8bc9ff',
+        // borderRadius: 15,
+        marginBottom: 20   
     },
 
     title:{
-        fontSize: 30,
+        fontSize: 28,
         color: '#3c3c3c',
-        fontWeight: '800',
+        fontWeight: '700',
         textAlign: 'center',
         paddingHorizontal: 20,
     },
