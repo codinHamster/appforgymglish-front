@@ -7,7 +7,8 @@ import { removeCountry, removeAllCountry } from '../reducers/favorites';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default function ProfileScreen({ navigation }) {
+
+export default function FavoritesScreen({ navigation }) {
   
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites.value)
@@ -23,12 +24,13 @@ export default function ProfileScreen({ navigation }) {
   const handleCountryClick = selectCountry => {
     navigation.navigate('CountryInfo', { selectCountry: selectCountry.cca3, returnScreen: 'Favoris' })
   }
+  
 
  return (
   <SafeAreaView style={styles.container}>
 
     <View style={{flexDirection: 'row', justifyContent: 'center', marginHorizontal: 7 }}>
-      <Header title="Mes pays à visiter" showDelete={true} onDeleteClick={handleDeleteAll}/>
+      <Header title="Mes pays à visiter" showDelete={favorites.length > 0} onDeleteClick={handleDeleteAll}/>
     </View>
 
     <ScrollView>
@@ -59,6 +61,7 @@ export default function ProfileScreen({ navigation }) {
   </SafeAreaView>
  );
 }
+
 
 const styles = StyleSheet.create({
   container: {

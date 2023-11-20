@@ -1,11 +1,8 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 
-import { LinearGradient } from 'expo-linear-gradient';
-
 
 export default function CountryCard(props) {
 
-     
     return (
         
         <View>
@@ -16,6 +13,7 @@ export default function CountryCard(props) {
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
 

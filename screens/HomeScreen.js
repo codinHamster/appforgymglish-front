@@ -32,6 +32,7 @@ export default function HomeScreen({ navigation }) {
               flags: country.flags.png,
               cca3: country.cca3 };  
           });
+          formatedData.sort((a, b) => a.nameFRA.localeCompare(b.nameFRA));
           setCountriesData(formatedData);
           setCountriesCount(data.countries.length)
         }); 

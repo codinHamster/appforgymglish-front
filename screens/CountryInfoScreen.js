@@ -7,6 +7,7 @@ import Header from '../components/Header';
 
 import { addCountry, removeCountry } from '../reducers/favorites'
 
+
 export default function CountryInfoScreen({ route, navigation, selectedRegion }) {
 
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ export default function CountryInfoScreen({ route, navigation, selectedRegion })
   const handleCloseClick = () => {
     navigation.navigate(returnScreen, { selectedRegion })
   }
+  
 
   return (
   <SafeAreaView style={styles.container}>
@@ -113,6 +115,7 @@ export default function CountryInfoScreen({ route, navigation, selectedRegion })
   </SafeAreaView>
  );
 }
+
 
 const styles = StyleSheet.create({
   container: {

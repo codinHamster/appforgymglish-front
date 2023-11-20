@@ -2,10 +2,9 @@ import { Platform, StatusBar, StyleSheet, Text, View, TouchableOpacity } from 'r
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+
 export default function Header({ title, showArrow, onBackClick, showClose, onCloseClick, showDelete, onDeleteClick }) {
 
-
-     
     return (
         <View style={styles.container}>   
              
