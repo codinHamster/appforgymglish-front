@@ -14,8 +14,12 @@ export const userSlice = createSlice({
     removeCountry: (state, action) => {
       state.value = state.value.filter(country => country.name !== action.payload);
     },
+
+    removeAllCountry: (state) => {
+      state.value = [];
+    },
   },
 });
 
-export const { addCountry, removeCountry } = userSlice.actions;
+export const { addCountry, removeCountry, removeAllCountry } = userSlice.actions;
 export default userSlice.reducer;

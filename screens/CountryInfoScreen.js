@@ -117,7 +117,7 @@ export default function CountryInfoScreen({ route, navigation, selectedRegion })
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#dbeeff',
+    backgroundColor: '#e5f3ff',
     alignItems: 'center',
   },
 
@@ -140,7 +140,9 @@ const styles = StyleSheet.create({
     // marginTop: 15,
     height: 500,
     width: '90%',
-    paddingBottom: 10
+    paddingBottom: 10,
+    borderWidth: 2,
+    borderColor: '#8bc9ff'
   },
 
   titleText: {
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 7,
-    borderWidth: 1,
+    // borderWidth: 2,
     borderColor: '#ff8787'
   },
 

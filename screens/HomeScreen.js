@@ -126,7 +126,7 @@ export default function HomeScreen({ navigation }) {
             onChangeText={text => setSearchCountry(text)}
             value={searchCountry}
             onSubmitEditing={handleSearch}
-            placeholder='Rechercher directement le pays'
+            placeholder='Rechercher directement un pays'
           />
         </View>
       )}
@@ -179,7 +179,7 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#dbeeff',
+    backgroundColor: '#e5f3ff',
   },
 
   textInput: {

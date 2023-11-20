@@ -2,7 +2,7 @@ import { Platform, StatusBar, StyleSheet, Text, View, TouchableOpacity } from 'r
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default function Header({ title, showArrow, onBackClick, showClose, onCloseClick }) {
+export default function Header({ title, showArrow, onBackClick, showClose, onCloseClick, showDelete, onDeleteClick }) {
 
 
      
@@ -16,13 +16,19 @@ export default function Header({ title, showArrow, onBackClick, showClose, onClo
             
             {showArrow && (
                 <TouchableOpacity onPress={onBackClick}>
-                    <FontAwesome name={'arrow-left'} size={24}/>
+                    <FontAwesome name={'arrow-left'} size={24} color={'#3c3c3c'}/>
                 </TouchableOpacity>
             )}
 
             {showClose && (
                 <TouchableOpacity onPress={onCloseClick}>
-                    <FontAwesome name={'close'} size={28}/>
+                    <FontAwesome name={'close'} size={28} color={'#3c3c3c'}/>
+                </TouchableOpacity>
+            )}
+
+            {showDelete && (
+                <TouchableOpacity onPress={onDeleteClick}>
+                    <FontAwesome name={'trash-o'} size={28} color={'#3c3c3c'}/>
                 </TouchableOpacity>
             )}
 

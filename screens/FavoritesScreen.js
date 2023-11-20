@@ -3,7 +3,7 @@ import { useDispatch, useSelector} from 'react-redux';
 
 import Header from '../components/Header';
 
-import { removeCountry } from '../reducers/favorites';
+import { removeCountry, removeAllCountry } from '../reducers/favorites';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
@@ -16,6 +16,10 @@ export default function ProfileScreen({ navigation }) {
     dispatch(removeCountry(countryToRemove.name))
   }
 
+  const handleDeleteAll = () => {
+    dispatch(removeAllCountry())
+  }
+
   const handleCountryClick = selectCountry => {
     navigation.navigate('CountryInfo', { selectCountry: selectCountry.cca3, returnScreen: 'Favoris' })
   }
@@ -24,7 +28,7 @@ export default function ProfileScreen({ navigation }) {
   <SafeAreaView style={styles.container}>
 
     <View style={{flexDirection: 'row', justifyContent: 'center', marginHorizontal: 7 }}>
-      <Header title="Mes pays à visiter"/>
+      <Header title="Mes pays à visiter" showDelete={true} onDeleteClick={handleDeleteAll}/>
     </View>
 
     <ScrollView>
@@ -43,7 +47,7 @@ export default function ProfileScreen({ navigation }) {
             </TouchableOpacity>
             
             <TouchableOpacity onPress={() => handleDelete(country)}>
-              <FontAwesome style={styles.deleteIcon} name="trash" color="#ff8787"/>
+              <FontAwesome style={styles.deleteIcon} name="trash-o" color="#ff8787"/>
             </TouchableOpacity>
 
           </View>
@@ -59,7 +63,7 @@ export default function ProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#dbeeff',
+    backgroundColor: '#e5f3ff',
   },
 
   favContainer: {
@@ -86,7 +90,12 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     height: 80,
     width: '95%',
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 7,
   },
 
   textName: {

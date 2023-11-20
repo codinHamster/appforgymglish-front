@@ -22,7 +22,7 @@ export default function RegionCard(props) {
      
     return (
         <View style={styles.container}>
-            <ImageBackground style={styles.regionImage} source={regionImages[`${props.regionName}`]} blurRadius={4} imageStyle={{ opacity: 0.3}}>
+            <ImageBackground style={styles.regionImage} source={regionImages[`${props.regionName}`]} blurRadius={2} imageStyle={{ opacity: 0.2}}>
                 <Text style={styles.regionText}>{frenchRegionName}</Text>
             </ImageBackground>
         </View>
