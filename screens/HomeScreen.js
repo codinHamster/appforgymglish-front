@@ -14,6 +14,8 @@ export default function HomeScreen({ navigation }) {
   const [searchCountry, setSearchCountry] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showRegionCard, setShowRegionCard] = useState(true);
+  const [countriesCount, setCountriesCount] = useState(0);
+
 
   const BACKEND_ADDRESS = 'https://appforgymglish-back.vercel.app';
 
@@ -31,6 +33,7 @@ export default function HomeScreen({ navigation }) {
               cca3: country.cca3 };  
           });
           setCountriesData(formatedData);
+          setCountriesCount(data.countries.length)
         }); 
     } 
   }, [selectedRegion]);
@@ -105,7 +108,7 @@ export default function HomeScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
     
       <View style={{flexDirection: 'column', justifyContent: 'center', marginHorizontal: 7 }}>
-        <Header title={frenchRegionName} showArrow={selectedRegion} onBackClick={handleBackClick}/>
+        <Header title={selectedRegion ? `${frenchRegionName} : ${countriesData.length} pays` : 'The World Trotter'} showArrow={selectedRegion} onBackClick={handleBackClick}/>
       </View>
 
       {selectedRegion && (
