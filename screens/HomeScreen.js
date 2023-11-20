@@ -6,13 +6,11 @@ import Header from '../components/Header';
 import CountryCard from '../components/CountryCard';
 import RegionCard from '../components/RegionCard';
 
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
 
 export default function HomeScreen({ navigation }) {
 
   const [countriesData, setCountriesData] = useState([]);
-  const [selectRegion, setSelectRegion] = useState(null);
+  const [selectedRegion, setSelectedRegion] = useState(null);
   const [searchCountry, setSearchCountry] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showRegionCard, setShowRegionCard] = useState(true);
@@ -20,8 +18,8 @@ export default function HomeScreen({ navigation }) {
   const BACKEND_ADDRESS = 'https://appforgymglish-back.vercel.app';
 
   useEffect(() => {
-    if (selectRegion) {
-      fetch(`${BACKEND_ADDRESS}/region/${selectRegion}`)
+    if (selectedRegion) {
+      fetch(`${BACKEND_ADDRESS}/region/${selectedRegion}`)
         .then(response => response.json())  
         .then(data => {
           const formatedData = data.countries.map(country => {
@@ -35,15 +33,16 @@ export default function HomeScreen({ navigation }) {
           setCountriesData(formatedData);
         }); 
     } 
-  }, [selectRegion]);
+  }, [selectedRegion]);
 
   useEffect(() => {
     const homeInitial = navigation.addListener('focus', () => {
-      setSelectRegion(null);
+      setSelectedRegion(selectedRegion || null);
       setSearchCountry('');
+      setShowRegionCard(!selectedRegion)
     });
     return homeInitial;
-  }, [navigation]);
+  }, [navigation, selectedRegion]);
 
   const handleSearch = () => {
     if (searchCountry.length > 1) {
@@ -86,30 +85,36 @@ export default function HomeScreen({ navigation }) {
     Oceania : 'Océanie'
   }
 
-  const frenchRegionName = regionFr[selectRegion] || selectRegion
+  const frenchRegionName = regionFr[selectedRegion] || selectedRegion
 
   const handleRegionClick = regionName => {
-    setSelectRegion(regionName);
+    setSelectedRegion(regionName);
   };
 
   const handleCountryClick = selectCountry => {
-    navigation.navigate('countryInfo', { selectCountry })
+    navigation.navigate('CountryInfo', { selectCountry, returnScreen: 'Accueil', showClose: true })
+  }
+
+  const handleBackClick = () => {
+    setSelectedRegion(null);
+    setSearchCountry('');
+    setShowRegionCard(true);
   }
 
   return (
     <SafeAreaView style={styles.container}>
     
       <View style={{flexDirection: 'column', justifyContent: 'center', marginHorizontal: 7 }}>
-        <Header title={frenchRegionName}/>
+        <Header title={frenchRegionName} showArrow={selectedRegion} onBackClick={handleBackClick}/>
       </View>
 
-      {selectRegion && (
+      {selectedRegion && (
         <View>
-          <Text style={styles.regionSelected}>Quel pays en {frenchRegionName} veux-tu voir ?</Text>
+          <Text style={styles.regionSelected}>Quel pays en {frenchRegionName} voudrais-tu visiter ?</Text>
         </View>
       )}
 
-      {!selectRegion && (
+      {!selectedRegion && (
         <View>
           <Text style={styles.regionSelected}>Recherche un pays ou choisis une région</Text>
           
@@ -125,7 +130,7 @@ export default function HomeScreen({ navigation }) {
       
       <ScrollView>
         {searchResults.map((result, index) => (
-          <TouchableOpacity key={index} onPress={() => navigation.navigate('countryInfo', { selectCountry: result.cca3 })}>
+          <TouchableOpacity key={index} onPress={() => navigation.navigate('CountryInfo', { selectCountry: result.cca3 })}>
             <Text style={styles.textResult}>{result.nameFRA}</Text>
           </TouchableOpacity>
         ))}
@@ -135,7 +140,7 @@ export default function HomeScreen({ navigation }) {
 
         {showRegionCard && (
         <View style={styles.regionContainer}>
-          {!selectRegion &&
+          {!selectedRegion &&
           regions.map((regions, i) => (
             <TouchableOpacity key={i} onPress={() => handleRegionClick(regions.name)} activeOpacity={0.8}>
               <RegionCard
@@ -147,7 +152,7 @@ export default function HomeScreen({ navigation }) {
         </View>
         )}
 
-        {selectRegion && (
+        {selectedRegion && (
         <View style={styles.countryContainer}>
           {countriesData.map((data, i) => (
             <TouchableOpacity key={i} onPress={() => handleCountryClick(data.cca3)}>

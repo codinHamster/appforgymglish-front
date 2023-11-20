@@ -1,13 +1,32 @@
-import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+export default function Header({ title, showArrow, onBackClick, showClose, onCloseClick }) {
 
 
-export default function Header({ title }) {
      
     return (
-        <View style={styles.container}>       
+        <View style={styles.container}>   
+             
+
             <View>
-                <Text style={styles.title}>{title || 'The World-Trotter'}</Text>
+                <Text style={styles.title}>{title || 'The World Trotter'}</Text>
             </View>
+            
+            {showArrow && (
+                <TouchableOpacity onPress={onBackClick}>
+                    <FontAwesome name={'arrow-left'} size={24}/>
+                </TouchableOpacity>
+            )}
+
+            {showClose && (
+                <TouchableOpacity onPress={onCloseClick}>
+                    <FontAwesome name={'close'} size={28}/>
+                </TouchableOpacity>
+            )}
+
+
         </View>
     );
 }
@@ -17,15 +36,17 @@ const styles = StyleSheet.create({
 
     container: {
         marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-        justifyContent: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
         height: 60,
         // backgroundColor: '#8bc9ff',
-        borderBottomWidth: 3,
+        borderBottomWidth: 2,
         borderColor: '#8bc9ff',
-        // borderRadius: 15,
-        marginBottom: 20   
+        borderRadius: 15,
+        marginBottom: 20,
+        paddingHorizontal: 20, 
     },
 
     title:{
@@ -33,7 +54,7 @@ const styles = StyleSheet.create({
         color: '#3c3c3c',
         fontWeight: '700',
         textAlign: 'center',
-        paddingHorizontal: 20,
+        
     },
 
   })

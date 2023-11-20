@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { TouchableOpacity } from 'react-native';
 
 import HomeScreen from './screens/HomeScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
@@ -23,12 +24,20 @@ export default function App() {
     
     <Provider store={store}>
       <NavigationContainer>
-        <Tab.Navigator screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color }) => {
+        <Tab.Navigator screenOptions={({ route, navigation }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
             let iconName = '';
           
-            if (route.name === 'Accueil' || route.name === 'countryInfo') {
+            if (route.name === 'Accueil' || route.name === 'CountryInfo') {
               iconName = 'globe';
+              return (
+                <TouchableOpacity onPress={() => navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Accueil' }],
+                })}>
+                  <FontAwesome name={iconName} size={28} color={color} />
+                </TouchableOpacity>
+              );
             } else if (route.name === 'Favoris') {
               iconName = focused ? 'star' : 'star-o';
             }
@@ -44,7 +53,7 @@ export default function App() {
         >
           <Tab.Screen name="Accueil" component={HomeScreen} />
           <Tab.Screen name="Favoris" component={FavoritesScreen} />
-          <Tab.Screen name="countryInfo" component={CountryInfoScreen} options={{ tabBarButton: () => null }}/>
+          <Tab.Screen name="CountryInfo" component={CountryInfoScreen} options={{ tabBarButton: () => null }}/>
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>

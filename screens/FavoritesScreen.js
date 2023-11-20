@@ -17,7 +17,7 @@ export default function ProfileScreen({ navigation }) {
   }
 
   const handleCountryClick = selectCountry => {
-    navigation.navigate('countryInfo', { selectCountry: selectCountry.cca3 })
+    navigation.navigate('CountryInfo', { selectCountry: selectCountry.cca3, returnScreen: 'Favoris' })
   }
 
  return (

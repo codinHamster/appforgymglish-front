@@ -7,14 +7,14 @@ import Header from '../components/Header';
 
 import { addCountry, removeCountry } from '../reducers/favorites'
 
-export default function CountryInfoScreen({ route }) {
+export default function CountryInfoScreen({ route, navigation, selectedRegion }) {
 
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites.value)
 
   const [countriesData, setCountriesData] = useState([]);
 
-  const { selectCountry } = route.params;
+  const { selectCountry, returnScreen, showClose } = route.params;
 
   const BACKEND_ADDRESS = 'https://appforgymglish-back.vercel.app';
 
@@ -63,11 +63,15 @@ export default function CountryInfoScreen({ route }) {
     }
   };
 
+  const handleCloseClick = () => {
+    navigation.navigate(returnScreen, { selectedRegion })
+  }
+
   return (
   <SafeAreaView style={styles.container}>
     
     <View style={{flexDirection: 'row', justifyContent: 'center', marginHorizontal: 7 }}>
-      <Header title={countriesData.name}/>
+      <Header title={countriesData.name} showClose={showClose} onCloseClick={handleCloseClick}/>
     </View>
 
     <View style={styles.cardCountry}>
